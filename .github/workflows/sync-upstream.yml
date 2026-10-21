@@ -36,16 +36,11 @@ jobs:
 
       - name: Отправить
         run: |
-          if git diff --quiet HEAD origin/main; then
-            echo "Изменений нет — пушить нечего."
-            exit 0
-          fi
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git push --force-with-lease origin main
 
-      - name: Обновить дату синхронизации в README
-        if: success()
+      - name: Обновить дату синхронизации
         run: |
           date -u +%Y-%m-%d > .sync-date
           git config user.name  "github-actions[bot]"
