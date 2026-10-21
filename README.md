@@ -1,36 +1,30 @@
-# NeoForged Documentation
+# NeoForge — зеркало официальной документации
 
-This repository is used to store documentation on NeoForge, the Minecraft modding API. It also contains documentation on NeoGradle, a Gradle plugin for developing NeoForge and mods using NeoForge.
+> Это **зеркало** (fork) официального репозитория
+> [`neoforged/Documentation`](https://github.com/neoforged/Documentation).
+> Оно синхронизируется с оригиналом автоматически — GitHub Actions
+> подтягивает изменения ежедневно.
 
-The documentation is built using [Docusaurus 3](https://docusaurus.io)
+Официальная документация NeoForged: ModDevGradle, структурирование мода, регистрации, ресурсы, миграционные primers между версиями.
 
-## Contributing
+- Оригинал: <https://github.com/neoforged/Documentation>
+- Сайт документации: <https://docs.neoforged.net>
+- Последняя синхронизация: **2026-10-09**
 
-You can read the [contribution guidelines on the docs](https://docs.neoforged.net/contributing/).
+## Что здесь полезного
 
-If you wish to contribute to the documentation, fork and clone this repository.
+| Раздел | Описание |
+|---|---|
+| — | документация |
 
-The documentation uses Node.js 18. This can either be installed manually or using a version manager that supports `.node-version` or `.nvmrc`. For most version managers, the `install` and/or `use` command can be used to setup the correct Node.js version.
+## Свежесть
 
-For example:
+Синхронизация выполняется workflow [`sync-upstream.yml`](.github/workflows/sync-upstream.yml):
+каждый день и по кнопке вручную. Если upstream переписал историю — зеркало
+приводится к точному состоянию оригинала (`--force-with-lease`).
 
-```bash
-nvm install # or 'nvs use'
-```
+## Связанные репозитории
 
-You can run the following commands if you wish to preview the documentation website locally through the live development server. Most changes are reflected live without having to restart the server.
-
-```bash
-npm install
-npm run start
-```
-
-### Building
-
-If you wish to build a static version of the documentation which can be deployed, you can run the following command:
-
-```bash
-npm run build
-```
-
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
+- Собственный справочник по моддингу: [`ssr33242/modding-docs`](https://github.com/ssr33242/modding-docs)
+- Fabric: [`ssr33242/fabric-docs`](https://github.com/ssr33242/fabric-docs)
+- Forge: [`ssr33242/forge-docs`](https://github.com/ssr33242/forge-docs)
