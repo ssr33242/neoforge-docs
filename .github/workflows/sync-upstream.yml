@@ -1,0 +1,48 @@
+name: Синхронизация с оригиналом
+
+# Зеркало официальной документации. Схема:
+#   • ветка <BRANCH> — чистый контент оригинала + метка зеркала (README);
+#   • ветка mirror-meta — шаблон метки и этот workflow (они переживают
+#     обновление: после reset --hard файлы берутся обратно из mirror-meta).
+on:
+  schedule:
+    - cron: "23 4 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Подключить оригинал и служебную ветку
+        run: |
+          git remote remove upstream 2>/dev/null || true
+          git remote add upstream https://github.com/neoforged/Documentation.git
+          git fetch upstream --prune --tags
+          git fetch origin mirror-meta:mirror-meta
+
+      - name: Обновить контент до состояния оригинала
+        run: |
+          git reset --hard upstream/main
+
+      - name: Вернуть метку зеркала
+        run: |
+          git checkout mirror-meta -- .mirror
+          git checkout mirror-meta -- .github/workflows/sync-upstream.yml
+          cp README.md .mirror/README.upstream.md
+          cat .mirror/README.head.md .mirror/README.upstream.md > README.md
+          date -u +%Y-%m-%d > .sync-date
+          git add -A
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: синхронизация с upstream ($(date -u +%Y-%m-%d))" || echo "нечего коммитить"
+
+      - name: Отправить
+        run: git push --force-with-lease origin main
